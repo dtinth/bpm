@@ -52,8 +52,8 @@ $(function() {
       }
       return (60000 / (sum / count))
     }
-    return function() {
-      record.push(new Date().getTime())
+    return function(t) {
+      record.push(t || new Date().getTime())
       return bpm()
     }
   })()
@@ -62,8 +62,8 @@ $(function() {
     $('#text').text(text)
   })
 
-  function tap() {
-    var bpm = beat()
+  function tap(t) {
+    var bpm = beat(t)
     bounce()
     text(bpm == null ? 'TAP' : Math.round(bpm) + '')
   }
@@ -77,7 +77,9 @@ $(function() {
       tap()
     }
   })
-  
+
+  window.tap = tap
+
 })
 
 
