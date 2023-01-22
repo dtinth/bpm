@@ -38,4 +38,20 @@ test('resets the bpm when beat is not kept', async ({ page }) => {
   await expect(page.locator('body')).toContainText('60')
 })
 
+test('responds to touch', async ({ page }) => {
+  const simulateTap = async () => {
+    await page.locator('#text').evaluate((el) => {
+      el.dispatchEvent(new Event('touchstart', { bubbles: true }))
+      el.dispatchEvent(new Event('touchend', { bubbles: true }))
+    })
+  }
+  await page.goto('/')
+  await simulateTap()
+  await simulateTap()
+  await simulateTap()
+  await simulateTap()
+  await simulateTap()
+  await expect(page.locator('body')).toContainText(/\d+/)
+})
+
 declare var tap: (t: number) => void
