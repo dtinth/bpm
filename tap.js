@@ -85,6 +85,11 @@ $(function() {
     }
   })
 
+  $('#sizer').on('touchstart', function(e) {
+    e.preventDefault()
+    tap()
+  })
+
   window.tap = tap
 
 })
