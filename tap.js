@@ -52,9 +52,16 @@ $(function() {
       }
       return (60000 / (sum / count))
     }
+    var resetTime
     return function(t) {
-      record.push(t || new Date().getTime())
-      return bpm()
+      t = t || new Date().getTime()
+      if (resetTime && t > resetTime) {
+        record = []
+      }
+      record.push(t)
+      var result = bpm()
+      resetTime = result ? t + (60000 / result) * 2 : undefined
+      return result
     }
   })()
 
